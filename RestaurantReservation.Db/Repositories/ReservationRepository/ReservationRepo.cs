@@ -60,4 +60,9 @@ public class ReservationRepo : IReservationRepo
     {
         return _context.Reservations.Any(x => x.Id == id);
     }
+
+    public async Task<List<Reservation>> GetReservationsByCustomer(int customerId)
+    {
+        return await _context.Reservations.Where(r=>r.CustomerId == customerId).ToListAsync();
+    }
 }

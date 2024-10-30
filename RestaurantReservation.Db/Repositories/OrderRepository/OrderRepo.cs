@@ -60,4 +60,22 @@ public class OrderRepo : IOrderRepo
     {
         return _context.Orders.Any(x => x.Id == id);
     }
+
+    public async Task<List<Order>> ListOrdersAndMenuItems(int reservationId)
+    {
+        return await _context.Orders.Include(o => o.OrderItems).Where(o => o.ReservationId == reservationId).ToListAsync();
+    }
+
+    public async Task<double> CalculateAverageOrderAmount(int employeeId)
+    {
+        return await _context.Orders.Where(o=>o.EmployeeId == employeeId).AverageAsync(x=>x.TotalAmount);
+    }
+
+    public async Task<List<MenuItem>> ListOrderedMenuItems(int reservationId)
+    {
+       return await _context.OrderItems
+            .Where(oi =>oi.Order.ReservationId == reservationId)
+            .Select(oi=>oi.MenuItem)
+            .ToListAsync();
+    }
 }

@@ -60,4 +60,11 @@ public class MenuItemRepo : IMenuItemRepo
     {
         return _context.MenuItems.Any(x => x.Id == id);
     }
+
+    public async Task<List<MenuItem>> ListOrderedMenuItems(int reservationId)
+    {
+        return await _context.MenuItems
+            .Where(x => x.OrderItems.Any(oi => oi.Order.ReservationId == reservationId))
+            .ToListAsync();
+    }
 }

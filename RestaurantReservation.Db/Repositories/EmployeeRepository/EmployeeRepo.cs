@@ -60,4 +60,9 @@ public class EmployeeRepo : IEmployeeRepo
     {
         return _context.Employees.Any(x => x.Id == id);
     }
+
+    public async Task<List<Employee>> ListManagers()
+    {
+        return await _context.Employees.Where(e => e.Position == "Manager").ToListAsync();
+    }
 }
