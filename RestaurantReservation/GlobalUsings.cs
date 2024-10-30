@@ -1,0 +1,11 @@
+global using RestaurantReservation;
+global using RestaurantReservation.Db;
+global using RestaurantReservation.Db.Models;
+global using RestaurantReservation.Db.Repositories.CustomerRepository;
+global using RestaurantReservation.Db.Repositories.EmployeeRepository;
+global using RestaurantReservation.Db.Repositories.MenuItemRepository;
+global using RestaurantReservation.Db.Repositories.OrderItemRepository;
+global using RestaurantReservation.Db.Repositories.OrderRepository;
+global using RestaurantReservation.Db.Repositories.ReservationRepository;
+global using RestaurantReservation.Db.Repositories.RestaurantRepository;
+global using RestaurantReservation.Db.Repositories.TableRepository;

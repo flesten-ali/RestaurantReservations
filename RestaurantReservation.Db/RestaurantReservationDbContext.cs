@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestaurantReservation.Db.Models;
 using Table = RestaurantReservation.Db.Models.Table;
 
@@ -52,7 +51,7 @@ public class RestaurantReservationDbContext : DbContext
                     new() { Id = 2,Name="Res2",Adress="B",OpeningHours=10,PhoneNumber="9039741"},
                     new() { Id = 3,Name="Res3",Adress="D",OpeningHours=6,PhoneNumber="9039741"},
                     new() { Id = 4,Name="Res4",Adress="C",OpeningHours=9,PhoneNumber="9039741"},
-                    new() { Id = 5,Name="Res5",Adress="A",OpeningHours=12,PhoneNumber="9039741"}                     
+                    new() { Id = 5,Name="Res5",Adress="A",OpeningHours=12,PhoneNumber="9039741"}
         };
         modelBuilder.Entity<Restaurant>()
             .HasData(restaurants);
@@ -89,7 +88,7 @@ public class RestaurantReservationDbContext : DbContext
             new(){Id = 2,RestaurantId = 1,PartySize = 2,CustomerId = 1, ReservationDate = DateTime.Now,TableId = 2},
             new(){Id = 3,RestaurantId = 2,PartySize = 2,CustomerId = 1, ReservationDate = DateTime.Now,TableId = 1},
             new(){Id = 4,RestaurantId = 3,PartySize = 2,CustomerId = 1, ReservationDate = DateTime.Now,TableId = 1},
-            new(){Id = 5,RestaurantId = 5,PartySize = 2,CustomerId = 1, ReservationDate = DateTime.Now,TableId = 1} 
+            new(){Id = 5,RestaurantId = 5,PartySize = 2,CustomerId = 1, ReservationDate = DateTime.Now,TableId = 1}
         };
         modelBuilder.Entity<Reservation>()
             .HasData(reservations);
@@ -121,11 +120,11 @@ public class RestaurantReservationDbContext : DbContext
 
         var orderItems = new List<OrderItem>()
         {
-          new(){Id=1,MenuItemId=1,OrderId=1,Quantity=2},             
-          new(){Id=2,MenuItemId=2,OrderId=2,Quantity=2},             
-          new(){Id=3,MenuItemId=3,OrderId=3,Quantity=2},             
-          new(){Id=4,MenuItemId=4,OrderId=4,Quantity=2},             
-          new(){Id=5,MenuItemId=5,OrderId=5,Quantity=2}             
+          new(){Id=1,MenuItemId=1,OrderId=1,Quantity=2},
+          new(){Id=2,MenuItemId=2,OrderId=2,Quantity=2},
+          new(){Id=3,MenuItemId=3,OrderId=3,Quantity=2},
+          new(){Id=4,MenuItemId=4,OrderId=4,Quantity=2},
+          new(){Id=5,MenuItemId=5,OrderId=5,Quantity=2}
         };
         modelBuilder.Entity<OrderItem>()
             .HasData(orderItems);
