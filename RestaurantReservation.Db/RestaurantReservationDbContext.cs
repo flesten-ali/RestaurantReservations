@@ -14,6 +14,8 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Table> Tables { get; set; }
+    public DbSet<ReservationView> ReservationDetails {  get; set; }
+    public DbSet<EmployeeView> EmployeesDetails {  get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -21,6 +23,9 @@ public class RestaurantReservationDbContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ReservationView>().HasNoKey().ToView(nameof(ReservationDetails));
+        modelBuilder.Entity<EmployeeView>().HasNoKey().ToView(nameof(EmployeesDetails));
+         
         modelBuilder.Entity<OrderItem>()
             .HasOne(o => o.Order)
             .WithMany(o => o.OrderItems)

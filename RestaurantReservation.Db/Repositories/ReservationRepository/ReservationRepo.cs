@@ -65,4 +65,9 @@ public class ReservationRepo : IReservationRepo
     {
         return await _context.Reservations.Where(r=>r.CustomerId == customerId).ToListAsync();
     }
+
+    public async Task<List<ReservationView>> AllReservationsWithTheirAssociatedCustomerAndRestaurant()
+    {
+        return await  _context.ReservationDetails.ToListAsync();
+    }
 }

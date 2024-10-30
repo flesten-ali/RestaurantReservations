@@ -65,4 +65,9 @@ public class EmployeeRepo : IEmployeeRepo
     {
         return await _context.Employees.Where(e => e.Position == "Manager").ToListAsync();
     }
+
+    public async Task<List<EmployeeView>> EmployeesWithRespectiveRestaurantDetails()
+    {
+        return await _context.EmployeesDetails.ToListAsync();
+    }
 }
