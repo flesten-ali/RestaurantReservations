@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Repositories.CustomerRepository;
 using RestaurantReservation.Db.Repositories.RestaurantRepository;
 using Table = RestaurantReservation.Db.Models.Table;
 
@@ -28,6 +29,7 @@ public class RestaurantReservationDbContext : DbContext
         modelBuilder.Entity<ReservationView>().HasNoKey().ToView(nameof(ReservationDetails));
         modelBuilder.Entity<EmployeeView>().HasNoKey().ToView(nameof(EmployeesDetails));
         modelBuilder.Entity<RevenueResult>().HasNoKey().ToFunction("CalculateTotalRevenue");
+        modelBuilder.Entity<CustomersPartySize>().HasNoKey().ToSqlQuery("FindCustomersWithPartySize");
         
         modelBuilder.Entity<OrderItem>()
             .HasOne(o => o.Order)

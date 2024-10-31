@@ -10,6 +10,12 @@
         //Console.WriteLine();
         RestaurantRepo restaurantRepo = new(context);
         Console.WriteLine(await restaurantRepo.CalculateTheTotalRevenue(1));
+        CustomerRepo customerRepo = new(context);
+        var res = await customerRepo.CustomersReservationsWithPartySize(1);
+        foreach (var cus in res)
+        {
+            Console.WriteLine(cus.CustomerName);
+        }
     }
 
     private static async Task TestEmployee(RestaurantReservationDbContext context)

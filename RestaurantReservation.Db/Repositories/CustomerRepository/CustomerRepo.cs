@@ -63,4 +63,12 @@ public class CustomerRepo : ICustomerRepo
         _context.Customers.Remove(customer);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<List<CustomersPartySize>> CustomersReservationsWithPartySize(int size)
+    {
+        return await _context.Set<CustomersPartySize>()
+            .FromSqlInterpolated($"FindCustomersWithPartySize {size}")
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
