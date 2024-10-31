@@ -60,4 +60,13 @@ public class RestaurantRepo : IRestaurantRepo
     {
         return _context.Restaurants.Any(x => x.Id == id);
     }
+
+    public async Task<decimal> CalculateTheTotalRevenue(int restaurantId)
+    {
+        var result = await _context.Set<RevenueResult>()
+             .FromSqlInterpolated($"SELECT dbo.CalculateTotalRevenue({restaurantId}) AS TotalRevenue")
+             .AsNoTracking()
+             .SingleAsync();
+        return result.TotalRevenue;
+    }
 }

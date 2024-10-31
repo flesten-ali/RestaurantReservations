@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Repositories.RestaurantRepository;
 using Table = RestaurantReservation.Db.Models.Table;
 
 namespace RestaurantReservation.Db;
@@ -16,16 +17,18 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Table> Tables { get; set; }
     public DbSet<ReservationView> ReservationDetails {  get; set; }
     public DbSet<EmployeeView> EmployeesDetails {  get; set; }
-
+ 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=WX1094183;Database=RestaurantReservationCore;TrustServerCertificate=True;Trusted_Connection=True;");
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ReservationView>().HasNoKey().ToView(nameof(ReservationDetails));
         modelBuilder.Entity<EmployeeView>().HasNoKey().ToView(nameof(EmployeesDetails));
-         
+        modelBuilder.Entity<RevenueResult>().HasNoKey().ToFunction("CalculateTotalRevenue");
+        
         modelBuilder.Entity<OrderItem>()
             .HasOne(o => o.Order)
             .WithMany(o => o.OrderItems)

@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db.Models;
-
-class Program
+﻿class Program
 {
     public static async Task Main(string[] args)
     {
         RestaurantReservationDbContext context = new();
-        await TestTable(context);
-        OrderRepo repo = new(context);
-        var res = await repo.CalculateAverageOrderAmount(1);
-        Console.WriteLine(res);
-        Console.WriteLine();
+        //await TestTable(context);
+        //OrderRepo repo = new(context);
+        //var res = await repo.CalculateAverageOrderAmount(1);
+        //Console.WriteLine(res);
+        //Console.WriteLine();
+        RestaurantRepo restaurantRepo = new(context);
+        Console.WriteLine(await restaurantRepo.CalculateTheTotalRevenue(1));
     }
 
     private static async Task TestEmployee(RestaurantReservationDbContext context)
