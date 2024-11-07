@@ -1,0 +1,6 @@
+﻿{
+  "ConnectionStrings": {
+    "ReservationsConnectionString": "Server=WX1094183;Database=RestaurantReservationCore;TrustServerCertificate=True;Trusted_Connection=True;"
+  }
+
+}

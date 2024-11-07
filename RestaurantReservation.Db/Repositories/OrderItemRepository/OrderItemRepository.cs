@@ -3,11 +3,11 @@ using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories.OrderItemRepository;
 
-public class OrderItemRepo : IOrderItemRepo
+public class OrderItemRepository : IOrderItemRepository
 {
     private readonly RestaurantReservationDbContext _context;
 
-    public OrderItemRepo(RestaurantReservationDbContext context)
+    public OrderItemRepository(RestaurantReservationDbContext context)
     {
         _context = context;
     }
@@ -21,39 +21,19 @@ public class OrderItemRepo : IOrderItemRepo
     public async Task Delete(int id)
     {
         var orderItem = await _context.OrderItems.FindAsync(id);
-        if (orderItem == null)
-        {
-            Console.WriteLine("Not Found!");
-            return;
-        }
         _context.OrderItems.Remove(orderItem);
         await _context.SaveChangesAsync();
     }
 
+    public async Task<OrderItem> GetById(int id)
+    {
+        return await _context.OrderItems.SingleOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task Update(int id, OrderItem orderItem)
     {
-        if (id != orderItem.Id)
-        {
-            Console.WriteLine("Bad Request!");
-            return;
-        }
         _context.Entry(orderItem).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch
-        {
-            if (!OrderItemExists(id))
-            {
-                Console.WriteLine("Not Found");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
     }
 
     private bool OrderItemExists(int id)

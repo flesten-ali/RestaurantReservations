@@ -3,11 +3,11 @@ using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories.TableRepository;
 
-public class TableRepo : ITableRepo
+public class TableRepository : ITableRepository
 {
     private readonly RestaurantReservationDbContext _context;
 
-    public TableRepo(RestaurantReservationDbContext context)
+    public TableRepository(RestaurantReservationDbContext context)
     {
         _context = context;
     }
@@ -21,39 +21,19 @@ public class TableRepo : ITableRepo
     public async Task Delete(int id)
     {
         var table = await _context.Tables.FindAsync(id);
-        if (table == null)
-        {
-            Console.WriteLine("Not Found!");
-            return;
-        }
         _context.Tables.Remove(table);
         await _context.SaveChangesAsync();
     }
 
+    public async Task<Table> GetById(int id)
+    {
+        return await _context.Tables.SingleOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task Update(int id, Table table)
     {
-        if (id != table.Id)
-        {
-            Console.WriteLine("Bad Request!");
-            return;
-        }
         _context.Entry(table).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch
-        {
-            if (!TableExists(id))
-            {
-                Console.WriteLine("Not Found");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
     }
 
     private bool TableExists(int id)

@@ -3,11 +3,11 @@ using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories.EmployeeRepository;
 
-public class EmployeeRepo : IEmployeeRepo
+public class EmployeeRepository : IEmployeeRepository
 {
     private readonly RestaurantReservationDbContext _context;
 
-    public EmployeeRepo(RestaurantReservationDbContext context)
+    public EmployeeRepository(RestaurantReservationDbContext context)
     {
         _context = context;
     }
@@ -21,39 +21,14 @@ public class EmployeeRepo : IEmployeeRepo
     public async Task Delete(int id)
     {
         var emp = await _context.Employees.FindAsync(id);
-        if (emp == null)
-        {
-            Console.WriteLine("Not Found!");
-            return;
-        }
         _context.Employees.Remove(emp);
         await _context.SaveChangesAsync();
     }
 
     public async Task Update(int id, Employee employee)
     {
-        if (id != employee.Id)
-        {
-            Console.WriteLine("Bad Request!");
-            return;
-        }
         _context.Entry(employee).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch
-        {
-            if (!EmployeeExists(id))
-            {
-                Console.WriteLine("Not Found");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
     }
 
     private bool EmployeeExists(int id)
@@ -63,11 +38,16 @@ public class EmployeeRepo : IEmployeeRepo
 
     public async Task<List<Employee>> ListManagers()
     {
-        return await _context.Employees.Where(e => e.Position == "Manager").ToListAsync();
+        return await _context.Employees.Where(e => e.Position == EmployeePosition.Manager.ToString()).ToListAsync();
     }
 
     public async Task<List<EmployeeView>> EmployeesWithRespectiveRestaurantDetails()
     {
         return await _context.EmployeesDetails.ToListAsync();
+    }
+
+    public async Task<Employee> GetById(int id)
+    {
+        return await _context.Employees.SingleOrDefaultAsync(x => x.Id == id);
     }
 }

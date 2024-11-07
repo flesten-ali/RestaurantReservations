@@ -4,9 +4,9 @@ namespace RestaurantReservation;
 
 public class Test<T>
 {
-    private IRepo<T> _repo;
+    private IRepository<T> _repo;
 
-    public Test(IRepo<T> repo)
+    public Test(IRepository<T> repo)
     {
         _repo = repo;
     }

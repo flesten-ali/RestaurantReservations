@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Repositories.CustomerRepository;
 using RestaurantReservation.Db.Repositories.RestaurantRepository;
@@ -8,6 +9,8 @@ namespace RestaurantReservation.Db;
 
 public class RestaurantReservationDbContext : DbContext
 {
+    private IConfiguration _configuration;
+
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
@@ -19,9 +22,16 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<ReservationView> ReservationDetails { get; set; }
     public DbSet<EmployeeView> EmployeesDetails { get; set; }
 
+    public RestaurantReservationDbContext(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=WX1094183;Database=RestaurantReservationCore;TrustServerCertificate=True;Trusted_Connection=True;");
+        optionsBuilder
+            .UseSqlServer(_configuration.GetConnectionString("ReservationsConnectionString"))
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -3,11 +3,11 @@ using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories.MenuItemRepository;
 
-public class MenuItemRepo : IMenuItemRepo
+public class MenuItemRepository : IMenuItemRepository
 {
     private readonly RestaurantReservationDbContext _context;
 
-    public MenuItemRepo(RestaurantReservationDbContext context)
+    public MenuItemRepository(RestaurantReservationDbContext context)
     {
         _context = context;
     }
@@ -21,39 +21,14 @@ public class MenuItemRepo : IMenuItemRepo
     public async Task Delete(int id)
     {
         var menuItem = await _context.MenuItems.FindAsync(id);
-        if (menuItem == null)
-        {
-            Console.WriteLine("Not Found!");
-            return;
-        }
         _context.MenuItems.Remove(menuItem);
         await _context.SaveChangesAsync();
     }
 
     public async Task Update(int id, MenuItem menuItem)
     {
-        if (id != menuItem.Id)
-        {
-            Console.WriteLine("Bad Request!");
-            return;
-        }
         _context.Entry(menuItem).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch
-        {
-            if (!MenuItemExists(id))
-            {
-                Console.WriteLine("Not Found");
-            }
-            else
-            {
-                throw;
-            }
-        }
+        await _context.SaveChangesAsync();
     }
 
     private bool MenuItemExists(int id)
@@ -66,5 +41,10 @@ public class MenuItemRepo : IMenuItemRepo
         return await _context.MenuItems
             .Where(x => x.OrderItems.Any(oi => oi.Order.ReservationId == reservationId))
             .ToListAsync();
+    }
+
+    public async Task<MenuItem> GetById(int id)
+    {
+        return await _context.MenuItems.SingleOrDefaultAsync(x => x.Id == id);
     }
 }

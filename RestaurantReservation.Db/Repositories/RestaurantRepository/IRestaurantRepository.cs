@@ -2,6 +2,6 @@
 
 namespace RestaurantReservation.Db.Repositories.RestaurantRepository;
 
-public interface IRestaurantRepo : IRepo<Restaurant>
+public interface IRestaurantRepository : IRepository<Restaurant>
 {
 }

@@ -2,7 +2,7 @@
 
 public class Restaurant
 {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     public string PhoneNumber { get; set; }
     public string Adress { get; set; }

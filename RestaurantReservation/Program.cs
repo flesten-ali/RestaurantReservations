@@ -8,9 +8,9 @@
         //var res = await repo.CalculateAverageOrderAmount(1);
         //Console.WriteLine(res);
         //Console.WriteLine();
-        RestaurantRepo restaurantRepo = new(context);
+        RestaurantRepository restaurantRepo = new(context);
         Console.WriteLine(await restaurantRepo.CalculateTheTotalRevenue(1));
-        CustomerRepo customerRepo = new(context);
+        CustomerRepository customerRepo = new(context);
         var res = await customerRepo.CustomersReservationsWithPartySize(1);
         foreach (var cus in res)
         {
@@ -27,7 +27,7 @@
             Position = "Manager",
             RestaurantId = 1,
         };
-        Test<Employee> t = new(new EmployeeRepo(context));
+        Test<Employee> t = new(new EmployeeRepository(context));
         await t.TestAdd(emp);
         await t.TestUpdate(6, new Employee { Id = 6, FirstName = "Update emp6", LastName = "B", RestaurantId = 1, Position = "CEO" });
         await t.TestDelete(6);
@@ -42,7 +42,7 @@
             Email = "Cus7@gmail.com",
             PhoneNumbers = "12131",
         };
-        Test<Customer> t = new(new CustomerRepo(context));
+        Test<Customer> t = new(new CustomerRepository(context));
         await t.TestAdd(customer);
         await t.TestUpdate(6, new Customer { Id = 6, FirstName = "Update Cus6", LastName = "B", PhoneNumbers = "1234" });
         await t.TestDelete(6);
@@ -56,7 +56,7 @@
             Price = 2,
             RestaurantId = 2
         };
-        Test<MenuItem> t = new(new MenuItemRepo(context));
+        Test<MenuItem> t = new(new MenuItemRepository(context));
         await t.TestAdd(menuItem);
         await t.TestUpdate(6, new MenuItem { Id = 6, Name = "Falafel Large", Price = 3, RestaurantId = 2 });
         await t.TestDelete(6);
@@ -70,7 +70,7 @@
             OrderId = 2,
             Quantity = 3,
         };
-        Test<OrderItem> t = new(new OrderItemRepo(context));
+        Test<OrderItem> t = new(new OrderItemRepository(context));
         await t.TestAdd(orderItem);
         await t.TestUpdate(6, new OrderItem { Id = 6, MenuItemId = 4, OrderId = 3 });
         await t.TestDelete(6);
@@ -85,7 +85,7 @@
             TotalAmount = 150,
             OrderDate = new DateTime()
         };
-        Test<Order> t = new(new OrderRepo(context));
+        Test<Order> t = new(new OrderRepository(context));
         await t.TestAdd(order);
         order.TotalAmount = 130;
         order.Id = 6;
@@ -103,7 +103,7 @@
             RestaurantId = 3,
             TableId = 4
         };
-        Test<Reservation> t = new(new ReservationRepo(context));
+        Test<Reservation> t = new(new ReservationRepository(context));
         await t.TestAdd(reservation);
         reservation.PartySize = 12;
         reservation.Id = 6;
@@ -120,7 +120,7 @@
             PhoneNumber = "095812",
             Adress = "Tulkarm",
         };
-        Test<Restaurant> t = new(new RestaurantRepo(context));
+        Test<Restaurant> t = new(new RestaurantRepository(context));
         await t.TestAdd(restaurant);
         restaurant.Adress = "Nablus";
         restaurant.Id = 6;
@@ -135,7 +135,7 @@
             Capacity = 9,
             RestaurantId = 1
         };
-        Test<Table> t = new(new TableRepo(context));
+        Test<Table> t = new(new TableRepository(context));
         await t.TestAdd(table);
         table.RestaurantId = 2;
         table.Id = 7;
